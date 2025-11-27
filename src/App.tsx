@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ListTasks } from "./components/ListTasks";
 import { CreateTask } from "./components/CreateTask";
 
