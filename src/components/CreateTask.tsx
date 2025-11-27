@@ -70,7 +70,7 @@ export function CreateTask(props: CreateTaskProps) {
   return (
     <div className="m-8">
       <Card>
-        <h2 className="text-center text-2xl font-extrabold mb-2 text-shadow-sm text-shadow-[#8900D3]">
+        <h2 className="text-center text-2xl font-extrabold mb-2 text-shadow-sm text-shadow-[# ]">
           Criar tarefa
         </h2>
         <form className="flex flex-col gap-2" onSubmit={quandoEnvia}>

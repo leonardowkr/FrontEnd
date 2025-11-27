@@ -45,13 +45,14 @@ type TarefaItemProps = {
 
 function TarefaItem(props: TarefaItemProps) {
   return (
-    <li className="bg-white rounded-lg box-border h-50 ml shadow-lg">
+    <li className="bg-white rounded-lg box-border h-50 ml shadow-lg relative">
       <h1 className="bg-[#282E51] rounded-t-lg shadow-lg text-white p-2">{props.title}</h1>
       <p className="p-2">{props.description}</p>
       <button
         type="submit"
-        className="bg-[#8900D3] p-2 rounded-lg text-white font-bold uppercase text-md shadow-xl  hover:cursor-pointer hover:bg-slate-700" 
+        className="bg-[#8900D3] p-2 rounded-b-lg text-white font-bold uppercase text-md shadow-xl  hover:cursor-pointer hover:bg-slate-700 absolute bottom-0 w-[100%]" 
       >Delete</button>
+      
     </li>
   );
 }
