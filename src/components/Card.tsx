@@ -4,6 +4,6 @@ type CardProps = {
 
 export function Card(props: CardProps) {
   return (
-    <div className="bg-white p-3 rounded-lg  shadow-2xl">{props.children}</div>
+    <div className="bg-[#F3EFE8] p-3 rounded-lg border-4 border-black/30 shadow-xl mb-2 w-[80%] m-auto">{props.children}</div>
   );
 }

@@ -67,10 +67,47 @@ export function CreateTask(props: CreateTaskProps) {
     toast("foi enviado!");
   }
 
+
+
+
+
+
+  async function quandoDeleta(event: any) {
+    event.preventDefault();
+    const dataObj = {
+      title: title,
+      description: description,
+      step: step,
+    };
+    const resposta = await fetch(
+      "https://pacaro-tarefas.netlify.app/api/duda/tasks",
+      {
+        method: "POST",
+        body: JSON.stringify(dataObj),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (resposta.status === 201) {
+      setTitle("");
+      setDescription("");
+      setStep("Para fazer");
+      toast("Tarefa criada com sucesso!");
+      props.quandoEnviaComSucesso();
+    } else {
+      toast(
+        "Houve um erro desconhecido do submundo do mal supremo ao enviar a sua tarefa"
+      );
+    }
+
+    toast("foi enviado!");
+  }
   return (
     <div className="m-8">
       <Card>
-        <h2 className="text-center text-2xl font-extrabold mb-2 text-shadow-sm text-shadow-[# ]">
+        <h2 className="text-center text-2xl font-extrabold mb-2 text-shadow-sm">
           Criar tarefa
         </h2>
         <form className="flex flex-col gap-2" onSubmit={quandoEnvia}>
@@ -87,7 +124,7 @@ export function CreateTask(props: CreateTaskProps) {
             placeholder="Digite a descrição da tarefa"
             className="border-2 border-slate-700 rounded-lg p-2 outline-none focus:border-[#8900D3] resize-none"
           ></textarea>
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-10 justify-center mb-3 mt-3">
             <div className="flex flex-col">
               <label htmlFor="step-em-andamento" className="text-center">
                 Para fazer
@@ -119,6 +156,7 @@ export function CreateTask(props: CreateTaskProps) {
               <input
                 type="radio"
                 id="step-pronto"
+                className=""
                 name="step-tarefa"
                 checked={step === "Pronto"}
                 onChange={() => setStep("Pronto")}
@@ -127,7 +165,7 @@ export function CreateTask(props: CreateTaskProps) {
           </div>
           <button
             type="submit"
-            className="bg-[#8900D3] p-3 rounded-lg text-white font-extrabold uppercase text-lg shadow-xl hover:cursor-pointer hover:bg-slate-700"
+            className="bg-[#8900D3] p-3 rounded-lg text-white font-extrabold uppercase text-lg shadow-xl hover:cursor-pointer hover:bg-slate-700 mb-5"
           >
             Enviar
           </button>

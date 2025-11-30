@@ -43,16 +43,24 @@ type TarefaItemProps = {
   description: string;
 };
 
+function EditarTarefa (){
+  alert('Editar Tarefa')
+} 
+
+function ExcluirTarefa (){
+  alert('Excluir Tarefa')
+} 
+
 function TarefaItem(props: TarefaItemProps) {
   return (
-    <li className="bg-white rounded-lg box-border h-50 ml shadow-lg relative">
-      <h1 className="bg-[#282E51] rounded-t-lg shadow-lg text-white p-2">{props.title}</h1>
+    <li className="bg-[#F3EFE8] rounded-lg box-border h-50 ml shadow-xl relative">
+      <h1 className="bg-[#282E51] rounded-t-lg shadow-lg text-white pl-3 p-2">{props.title}
+         <img src="../../media/escrever.png" id="icon-editar" className="size-6 inline-block filter invert brightness-2 absolute right-11 hover:cursor-pointer" alt="" onClick={EditarTarefa}/>
+        <img src="../../media/lixeira.png" className="size-6 inline-block filter invert  absolute right-3 hover:cursor-pointer" alt="" onClick={ExcluirTarefa} /></h1>
       <p className="p-2">{props.description}</p>
-      <button
-        type="submit"
-        className="bg-[#8900D3] p-2 rounded-b-lg text-white font-bold uppercase text-md shadow-xl  hover:cursor-pointer hover:bg-slate-700 absolute bottom-0 w-[100%]" 
-      >Delete</button>
+      
       
     </li>
   );
 }
+
