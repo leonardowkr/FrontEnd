@@ -42,7 +42,7 @@ export function CreateTask(props: CreateTaskProps) {
       step: step,
     };
     const resposta = await fetch(
-      "https://pacaro-tarefas.netlify.app/api/duda/tasks",
+      "https://pacaro-tarefas.netlify.app/api/leo/tasks",
       {
         method: "POST",
         body: JSON.stringify(dataObj),
@@ -67,43 +67,6 @@ export function CreateTask(props: CreateTaskProps) {
     toast("foi enviado!");
   }
 
-
-
-
-
-
-  async function quandoDeleta(event: any) {
-    event.preventDefault();
-    const dataObj = {
-      title: title,
-      description: description,
-      step: step,
-    };
-    const resposta = await fetch(
-      "https://pacaro-tarefas.netlify.app/api/duda/tasks",
-      {
-        method: "POST",
-        body: JSON.stringify(dataObj),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (resposta.status === 201) {
-      setTitle("");
-      setDescription("");
-      setStep("Para fazer");
-      toast("Tarefa criada com sucesso!");
-      props.quandoEnviaComSucesso();
-    } else {
-      toast(
-        "Houve um erro desconhecido do submundo do mal supremo ao enviar a sua tarefa"
-      );
-    }
-
-    toast("foi enviado!");
-  }
   return (
     <div className="m-8">
       <Card>
