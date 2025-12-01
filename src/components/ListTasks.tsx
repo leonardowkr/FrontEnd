@@ -42,7 +42,7 @@ export function ListTasks(props: ListTasksProps) {
         title={task.title}
         description={task.description}
         step={task.step}
-        id= {task.id}
+        id={task.id}
       />
     );
   });
@@ -62,7 +62,7 @@ function Step(props: TarefaItemProps) {
     case "Em andamento":
       return (
         <img
-          src="../../media/sinal3-2.png"
+          src="/sinal3-2.png"
           alt="Em andamento"
           className=""
           title="Em andamento"
@@ -70,17 +70,12 @@ function Step(props: TarefaItemProps) {
       );
     case "Pronto":
       return (
-        <img
-          src="../../media/sinal3-3.png"
-          alt="Pronto"
-          className=""
-          title="Pronto"
-        />
+        <img src="/sinal3-3.png" alt="Pronto" className="" title="Pronto" />
       );
     case "Para fazer":
       return (
         <img
-          src="../../media/sinal-1.svg"
+          src="/sinal-1.svg"
           alt="Em espera"
           className=""
           title="Em espera"
@@ -116,24 +111,23 @@ function TarefaItem(props: TarefaItemProps) {
       <h1 className="bg-[#282E51] rounded-t-lg shadow-lg text-white pl-3 p-2">
         {props.title}
         <p className="size-6 inline-block  absolute right-20">
-        <Step {...props} />
-      </p>
+          <Step {...props} />
+        </p>
         <img
-          src="../../media/escrever.png"
+          src="/escrever.png"
           id="icon-editar"
           className="size-6 inline-block filter invert brightness-2 absolute right-11 hover:cursor-pointer"
           alt=""
           onClick={EditarTarefa}
         />
         <img
-          src="../../media/lixeira.png"
+          src="/lixeira.png"
           className="size-6 inline-block filter invert  absolute right-3 hover:cursor-pointer"
           alt=""
           onClick={ExcluirTarefa}
         />
       </h1>
       <p className="p-2">{props.description}</p>
-      
     </li>
   );
 }
