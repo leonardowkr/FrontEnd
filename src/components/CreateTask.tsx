@@ -88,14 +88,14 @@ export function CreateTask(props: CreateTaskProps) {
             className="border-2 border-slate-700 rounded-lg p-2 outline-none focus:border-[#8900D3] resize-none"
           ></textarea>
           <div className="flex gap-10 justify-center mb-3 mt-3">
-            <div className="flex flex-col">
-              <label htmlFor="step-em-andamento" className="text-center">
+            <div className="flex flex-col justify-center items-center">
+              <label htmlFor="step-em-andamento" className="text-center w-25 h-10 bg-white">
                 Para fazer
               </label>
               <input
                 type="radio"
                 id="step-em-andamento"
-                name="step-tarefa"
+                name="step-tarefa" className=""
                 checked={step === "Para fazer"}
                 onChange={() => setStep("Para fazer")}
               />

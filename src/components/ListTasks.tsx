@@ -42,6 +42,7 @@ export function ListTasks(props: ListTasksProps) {
         title={task.title}
         description={task.description}
         step={task.step}
+        id= {task.id}
       />
     );
   });
@@ -53,6 +54,7 @@ type TarefaItemProps = {
   title: string;
   description: string;
   step: string;
+  id: number;
 };
 
 function Step(props: TarefaItemProps) {
