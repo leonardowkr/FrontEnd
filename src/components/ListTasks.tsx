@@ -12,8 +12,7 @@ type DeleteTaskProps = {
 };
 
 export function ListTasks(props: ListTasksProps) {
-  
-  const [tasks, setTasks] = useState([]);   
+  const [tasks, setTasks] = useState([]);
   async function carregaTarefas() {
     const resposta = await fetch(
       "https://pacaro-tarefas.netlify.app/api/leo/tasks/"
@@ -92,54 +91,141 @@ function TarefaItem(props: TarefaItemProps) {
   const [title, setTitle] = useState(props.title);
   const [description, setDescription] = useState(props.description);
   const [step, setStep] = useState(props.step);
+  const dataObj = {
+    title: title,
+    description: description,
+    step: step,
+  };
   function EditTaskModal() {
-    
     async function quandoEnvia(event: any) {
-      
       event.preventDefault();
-      const resposta = await fetch(
-      `https://pacaro-tarefas.netlify.app/api/leo/tasks/${props.id}`,{method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-      title: title,
-      description: description,
-      step: step
-  })})
-      const tarefas = await resposta.json();
-      const [tasks, setTasks] = useState([]);   
-      setTasks(tarefas);
-      setTitle(title);
-      setDescription(description);
-      //setEditTaskModalOpen(true)
-      
-      // fetch aqui
-      
-      setEditTaskModalOpen(false);
+
+      if (!title.trim() || !description.trim()) {
+        toast("Título e descrição são obrigatórios");
+        return;
+      }
+
+      try {
+        const resposta = await fetch(
+          `https://pacaro-tarefas.netlify.app/api/leo/tasks/${props.id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title: title,
+              description: description,
+              step: step,
+            }),
+          }
+        );
+
+        if (resposta.ok) {
+          toast("Tarefa atualizada com sucesso!");
+          setEditTaskModalOpen(false);
+          setTimeout(() => location.reload(), 300);
+        } else {
+          const erro = await resposta.text();
+          console.error("Erro ao atualizar:", erro);
+          toast("Erro ao atualizar tarefa");
+        }
+      } catch (error) {
+        console.error(error);
+        toast("Erro ao atualizar tarefa");
+      }
     }
 
     return (
       <Modal
         isOpen={editTaskModalOpen}
         onRequestClose={() => setEditTaskModalOpen(false)}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+          content: {
+            position: "relative",
+            width: "90%",
+            maxWidth: "500px",
+            height: "auto",
+            padding: "0",
+            border: "none",
+            borderRadius: "12px",
+            inset: "auto",
+          },
+        }}
       >
-        <form onSubmit={quandoEnvia}>
-          <input
-            type="text"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
-           <input
-            type="text"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-          />
-          <button type="submit" className="hover:cursor-pointer" onClick={()=> setEditTaskModalOpen(false)}>Editar</button>
-        </form>
+        <div className="bg-white rounded-lg shadow-2xl overflow-hidden">
+          <div className="bg-[#282E51] text-white p-6">
+            <h2 className="text-2xl font-bold flex items-center gap-2">
+              ✏️ Editar Tarefa
+            </h2>
+          </div>
+          <form onSubmit={quandoEnvia} className="p-6 space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Título
+              </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8900D3] transition-colors"
+                placeholder="Digite o título"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Descrição
+              </label>
+              <textarea
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8900D3] transition-colors resize-none"
+                rows={4}
+                placeholder="Digite a descrição"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Status
+              </label>
+              <select
+                value={step}
+                onChange={(event) => setStep(event.target.value as any)}
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8900D3] transition-colors"
+              >
+                <option value="Para fazer">Para fazer</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Pronto">Pronto</option>
+              </select>
+            </div>
+            <div className="flex gap-4 pt-4">
+              <button
+                type="submit"
+                className="flex-1 bg-[#8900D3] hover:bg-[#6f007f] text-white font-bold py-3 px-4 rounded-lg transition-colors shadow-lg"
+              >
+                Salvar Alterações
+              </button>
+              <button
+                type="button"
+                onClick={() => setEditTaskModalOpen(false)}
+                className="flex-1 bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-lg transition-colors"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
       </Modal>
     );
   }
 
   async function editarTarefa() {
+    setTitle(props.title);
+    setDescription(props.description);
     setEditTaskModalOpen(true);
   }
 
