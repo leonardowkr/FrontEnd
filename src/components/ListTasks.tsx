@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-simple-toasts";
+import Modal from "react-modal";
 
 type ListTasksProps = {
   tarefaCriadaFlag: boolean;
@@ -11,8 +12,8 @@ type DeleteTaskProps = {
 };
 
 export function ListTasks(props: ListTasksProps) {
-  const [tasks, setTasks] = useState([]);
-
+  
+  const [tasks, setTasks] = useState([]);   
   async function carregaTarefas() {
     const resposta = await fetch(
       "https://pacaro-tarefas.netlify.app/api/leo/tasks/"
@@ -86,28 +87,83 @@ function Step(props: TarefaItemProps) {
   }
 }
 
-function EditarTarefa(props: any) {
-  alert(props.id);
-}
+function TarefaItem(props: TarefaItemProps) {
+  const [editTaskModalOpen, setEditTaskModalOpen] = useState(false);
+  const [title, setTitle] = useState(props.title);
+  const [description, setDescription] = useState(props.description);
+  const [step, setStep] = useState(props.step);
+  function EditTaskModal() {
+    
+    async function quandoEnvia(event: any) {
+      
+      event.preventDefault();
+      const resposta = await fetch(
+      `https://pacaro-tarefas.netlify.app/api/leo/tasks/${props.id}`,{method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      title: title,
+      description: description,
+      step: step
+  })})
+      const tarefas = await resposta.json();
+      const [tasks, setTasks] = useState([]);   
+      setTasks(tarefas);
+      setTitle(title);
+      setDescription(description);
+      //setEditTaskModalOpen(true)
+      
+      // fetch aqui
+      
+      setEditTaskModalOpen(false);
+    }
 
-function ExcluirTarefa(props: any) {
-  alert("Excluir Tarefa");
+    return (
+      <Modal
+        isOpen={editTaskModalOpen}
+        onRequestClose={() => setEditTaskModalOpen(false)}
+      >
+        <form onSubmit={quandoEnvia}>
+          <input
+            type="text"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+          />
+           <input
+            type="text"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          />
+          <button type="submit" className="hover:cursor-pointer" onClick={()=> setEditTaskModalOpen(false)}>Editar</button>
+        </form>
+      </Modal>
+    );
+  }
 
-  async function quandoEnvia(event: any) {
+  async function editarTarefa() {
+    setEditTaskModalOpen(true);
+  }
+
+  async function excluirTarefa() {
     const resposta = await fetch(
-      "https://pacaro-tarefas.netlify.app/api/leo/tasks/",
+      `https://pacaro-tarefas.netlify.app/api/leo/tasks/${props.id}`,
       {
         method: "DELETE",
       }
     );
     if (resposta.status === 200) {
       toast("Tarefa deletada com sucesso!");
+      await new Promise((resolve) =>
+        setTimeout(() => {
+          location.reload();
+          resolve(null);
+        }, 1000)
+      );
     }
   }
-}
-function TarefaItem(props: TarefaItemProps) {
+
   return (
     <li className="bg-[#F3EFE8] rounded-lg box-border h-50 ml shadow-xl relative">
+      <EditTaskModal />
       <h1 className="bg-[#282E51] rounded-t-lg shadow-lg text-white pl-3 p-2">
         {props.title}
         <p className="size-6 inline-block  absolute right-20">
@@ -118,13 +174,13 @@ function TarefaItem(props: TarefaItemProps) {
           id="icon-editar"
           className="size-6 inline-block filter invert brightness-2 absolute right-11 hover:cursor-pointer"
           alt=""
-          onClick={EditarTarefa}
+          onClick={editarTarefa}
         />
         <img
           src="/lixeira.png"
           className="size-6 inline-block filter invert  absolute right-3 hover:cursor-pointer"
           alt=""
-          onClick={ExcluirTarefa}
+          onClick={excluirTarefa}
         />
       </h1>
       <p className="p-2">{props.description}</p>
