@@ -47,7 +47,7 @@ export function ListTasks(props: ListTasksProps) {
     );
   });
 
-  return <ul className="grid grid-cols-3 gap-8 m-8">{listaTasks}</ul>;
+  return <ul className="grid grid-cols-3 gap-8 ml-8 mr-8 mb-8 mt-4">{listaTasks}</ul>;
 }
 
 type TarefaItemProps = {
@@ -77,7 +77,8 @@ function Step(props: TarefaItemProps) {
         <img
           src="/sinal-1.svg"
           alt="Em espera"
-          className=""
+          className="invert"
+          style={{ filter: "invert(24%) sepia(93%) saturate(3500%) hue-rotate(358deg) brightness(104%) contrast(106%)" }}
           title="Em espera"
         />
       );
@@ -194,7 +195,7 @@ function TarefaItem(props: TarefaItemProps) {
               </label>
               <select
                 value={step}
-                onChange={(event) => setStep(event.target.value as any)}
+                onChange={(event) => setStep(event.target.value as Step)}
                 className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8900D3] transition-colors"
               >
                 <option value="Para fazer">Para fazer</option>

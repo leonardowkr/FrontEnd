@@ -68,7 +68,7 @@ export function CreateTask(props: CreateTaskProps) {
   }
 
   return (
-    <div className="m-8">
+    <div className="mr-8 ml-8 mt-8 mb-4">
       <Card>
         <h2 className="text-center text-2xl font-extrabold mb-2 text-shadow-sm">
           Criar tarefa
