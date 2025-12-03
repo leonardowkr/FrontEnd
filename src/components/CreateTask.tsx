@@ -91,7 +91,9 @@ export function CreateTask(props: CreateTaskProps) {
             <div className="flex flex-col justify-center items-center">
               <label
                 htmlFor="step-em-andamento"
-                className="text-center w-25 h-10 bg-white"
+                className={`border-3 border-[#AAA7A2] w-25 h-14 flex items-center justify-center rounded transition-colors ${
+                  step === "Para fazer" ? "bg-[#FF9B00] text-white" : "bg-white"
+                }`}
               >
                 Para fazer
               </label>
@@ -99,31 +101,44 @@ export function CreateTask(props: CreateTaskProps) {
                 type="radio"
                 id="step-em-andamento"
                 name="step-tarefa"
-                className=""
+                className="hidden border-2"
                 checked={step === "Para fazer"}
                 onChange={() => setStep("Para fazer")}
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="step-andamento" className="text-center">
+              <label
+                htmlFor="step-andamento"
+                className={`border-3 border-[#AAA7A2] w-25 h-14 text-center flex items-center justify-center rounded transition-colors ${
+                  step === "Em andamento"
+                    ? "bg-[#2BBCE3] text-white"
+                    : "bg-white"
+                }`}
+              >
                 Em andamento
               </label>
               <input
                 type="radio"
                 id="step-andamento"
                 name="step-tarefa"
+                className="hidden"
                 checked={step === "Em andamento"}
                 onChange={() => setStep("Em andamento")}
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="step-pronto" className="text-center">
+              <label
+                htmlFor="step-pronto"
+                className={`border-3 border-[#AAA7A2] w-25 h-14 flex items-center justify-center rounded transition-colors ${
+                  step === "Pronto" ? "bg-green-500 text-white" : "bg-white"
+                }`}
+              >
                 Pronto
               </label>
               <input
                 type="radio"
                 id="step-pronto"
-                className=""
+                className="hidden"
                 name="step-tarefa"
                 checked={step === "Pronto"}
                 onChange={() => setStep("Pronto")}
@@ -132,7 +147,7 @@ export function CreateTask(props: CreateTaskProps) {
           </div>
           <button
             type="submit"
-            className="bg-[#8900D3] p-3 rounded-lg text-white font-extrabold uppercase text-lg shadow-xl hover:cursor-pointer hover:bg-slate-700 mb-5"
+            className="bg-[#282E51] p-3 rounded-lg text-white font-extrabold uppercase text-lg shadow-xl hover:cursor-pointer hover:bg-slate-700 mb-5"
           >
             Enviar
           </button>

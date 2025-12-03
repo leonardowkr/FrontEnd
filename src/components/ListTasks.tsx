@@ -5,6 +5,7 @@ import Modal from "react-modal";
 type ListTasksProps = {
   tarefaCriadaFlag: boolean;
   toggleTarefaCriadaFlag: Function;
+  filtroSelecionado: string;
 };
 
 type DeleteTaskProps = {
@@ -36,9 +37,14 @@ export function ListTasks(props: ListTasksProps) {
     console.log(tasks);
   }, [tasks]);
 
-  const listaTasks = tasks.map((task: any) => {
+  const tarefasFiltradas = props.filtroSelecionado
+    ? tasks.filter((task: any) => task.step === props.filtroSelecionado)
+    : tasks;
+
+  const listaTasks = tarefasFiltradas.map((task: any) => {
     return (
       <TarefaItem
+        key={task.id}
         title={task.title}
         description={task.description}
         step={task.step}
@@ -47,7 +53,9 @@ export function ListTasks(props: ListTasksProps) {
     );
   });
 
-  return <ul className="grid grid-cols-3 gap-8 ml-8 mr-8 mb-8 mt-4">{listaTasks}</ul>;
+  return (
+    <ul className="grid grid-cols-3 gap-8 ml-8 mr-8 mb-8 mt-4">{listaTasks}</ul>
+  );
 }
 
 type TarefaItemProps = {
@@ -78,7 +86,10 @@ function Step(props: TarefaItemProps) {
           src="/sinal-1.svg"
           alt="Em espera"
           className="invert"
-          style={{ filter: "invert(24%) sepia(93%) saturate(3500%) hue-rotate(358deg) brightness(104%) contrast(106%)" }}
+          style={{
+            filter:
+              "invert(24%) sepia(93%) saturate(3500%) hue-rotate(358deg) brightness(104%) contrast(106%)",
+          }}
           title="Em espera"
         />
       );
@@ -195,7 +206,7 @@ function TarefaItem(props: TarefaItemProps) {
               </label>
               <select
                 value={step}
-                onChange={(event) => setStep(event.target.value as Step)}
+                onChange={(event) => setStep(event.target.value as any)}
                 className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#8900D3] transition-colors"
               >
                 <option value="Para fazer">Para fazer</option>
