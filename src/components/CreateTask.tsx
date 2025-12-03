@@ -92,7 +92,7 @@ export function CreateTask(props: CreateTaskProps) {
               <label
                 htmlFor="step-em-andamento"
                 className={`border-3 border-[#AAA7A2] w-25 h-14 flex items-center justify-center rounded transition-colors ${
-                  step === "Para fazer" ? "bg-[#FF9B00] text-white" : "bg-white"
+                  step === "Para fazer" ? "bg-[#FF9B00] text-black" : "bg-white"
                 }`}
               >
                 Para fazer
@@ -111,7 +111,7 @@ export function CreateTask(props: CreateTaskProps) {
                 htmlFor="step-andamento"
                 className={`border-3 border-[#AAA7A2] w-25 h-14 text-center flex items-center justify-center rounded transition-colors ${
                   step === "Em andamento"
-                    ? "bg-[#2BBCE3] text-white"
+                    ? "bg-[#2BBCE3] text-black"
                     : "bg-white"
                 }`}
               >
@@ -130,7 +130,7 @@ export function CreateTask(props: CreateTaskProps) {
               <label
                 htmlFor="step-pronto"
                 className={`border-3 border-[#AAA7A2] w-25 h-14 flex items-center justify-center rounded transition-colors ${
-                  step === "Pronto" ? "bg-green-500 text-white" : "bg-white"
+                  step === "Pronto" ? "bg-green-500 text-black" : "bg-white"
                 }`}
               >
                 Pronto
